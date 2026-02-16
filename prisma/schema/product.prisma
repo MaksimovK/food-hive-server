@@ -1,0 +1,65 @@
+model Product {
+  id String @id @default(uuid())
+
+  name        String
+  description String?
+  image       String
+  price       Float
+
+  caloriesPer100g Float   @map("calories_per_100g")
+  proteinPer100g  Float   @map("protein_per_100g")
+  fatPer100g      Float   @map("fat_per_100g")
+  carbsPer100g    Float   @map("carbs_per_100g")
+  servingSize     Int     @map("serving_size")
+  isActive        Boolean @default(true) @map("is_active")
+
+  productIngredients ProductIngredient[]
+
+  categoryId String   @map("category_id")
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  favorites  Favorite[]
+  cartItems  CartItem[]
+  orderItems OrderItem[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([categoryId])
+  @@map("products")
+}
+
+model Ingredient {
+  id String @id @default(uuid())
+
+  name String @unique
+
+  containsGluten Boolean @default(false) @map("contains_gluten")
+  containsDairy  Boolean @default(false) @map("contains_dairy")
+  containsNuts   Boolean @default(false) @map("contains_nuts")
+  containsSoy    Boolean @default(false) @map("contains_soy")
+  containsEggs   Boolean @default(false) @map("contains_eggs")
+
+  productIngredients ProductIngredient[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("ingredients")
+}
+
+model ProductIngredient {
+  id String @id @default(uuid())
+
+  amount Float?
+  unit   String?
+
+  productId String  @map("product_id")
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  ingredientId String     @map("ingredient_id")
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, ingredientId])
+  @@map("product_ingredients")
+}

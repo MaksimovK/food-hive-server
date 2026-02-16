@@ -1,0 +1,43 @@
+model User {
+  id String @id @default(uuid())
+
+  email    String   @unique
+  password String
+  name     String?
+  phone    String?  @unique
+  avatar   String?
+  role     UserRole @default(USER)
+
+  addresses     Address[]
+  favorites     Favorite[]
+  cartItems     CartItem[]
+  orders        Order[]
+  refreshTokens RefreshToken[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model RefreshToken {
+  id String @id @default(uuid())
+
+  tokenHash String   @unique @map("token_hash")
+  deviceId  String   @map("device_id")
+  expiresAt DateTime @map("expires_at")
+  revoked   Boolean  @default(false)
+
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([userId, deviceId])
+  @@map("refresh_tokens")
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}

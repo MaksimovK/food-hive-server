@@ -1,0 +1,72 @@
+model Order {
+  id String @id @default(uuid())
+
+  userName      String        @map("user_name")
+  status        OrderStatus   @default(PENDING)
+  paymentStatus PaymentStatus @default(PENDING) @map("payment_status")
+  totalAmount   Float         @map("total_amount")
+
+  deliveryStreet    String  @map("delivery_street")
+  deliveryHouse     String  @map("delivery_house")
+  deliveryApartment String? @map("delivery_apartment")
+  deliveryEntrance  String? @map("delivery_entrance")
+  deliveryFloor     String? @map("delivery_floor")
+  deliveryComment   String? @map("delivery_comment")
+  deliveryPhone     String  @map("delivery_phone")
+  orderComment      String? @map("order_comment")
+
+  userId String? @map("user_id")
+  user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  orderItems OrderItem[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([userId])
+  @@index([status])
+  @@map("orders")
+}
+
+model OrderItem {
+  id String @id @default(uuid())
+
+  quantity    Int
+  price       Float
+  productName String @map("product_name")
+
+  orderId String @map("order_id")
+  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  productId String?  @map("product_id")
+  product   Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+
+  @@index([orderId])
+  @@map("order_items")
+}
+
+/// Статусы заказа:
+///   PENDING      — Ожидает подтверждения
+///   CONFIRMED    — Подтверждён рестораном
+///   PREPARING    — Готовится
+///   ON_THE_WAY   — Курьер в пути
+///   DELIVERED    — Доставлен
+///   CANCELLED    — Отменён
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PREPARING
+  ON_THE_WAY
+  DELIVERED
+  CANCELLED
+}
+
+/// Статусы оплаты:
+///   PENDING   — Ожидает оплаты
+///   PAID      — Оплачен
+///   REFUNDED  — Средства возвращены
+enum PaymentStatus {
+  PENDING
+  PAID
+  REFUNDED
+}
