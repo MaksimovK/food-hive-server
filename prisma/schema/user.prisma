@@ -5,7 +5,7 @@ model User {
   password String
   name     String?
   phone    String?  @unique
-  avatar   String?
+  avatar   String?  @default("/public/images/user/default-avatar.png")
   role     UserRole @default(USER)
 
   addresses     Address[]
