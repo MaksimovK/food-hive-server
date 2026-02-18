@@ -100,7 +100,5 @@ export class IngredientService {
 			where: { id },
 			select: ingredientSelect
 		})
-
-		return { message: 'Ингредиент успешно удален' }
 	}
 }
