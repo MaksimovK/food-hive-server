@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common'
 import { RegisterDto } from '../auth/dto/register.dto'
 import { UpdateProfileDto } from './dto/update-profile.dto'
+import { userSelect } from './types/user.types'
 
 @Injectable()
 export class UserService {
@@ -37,30 +38,14 @@ export class UserService {
 				password: hashedPassword,
 				role: 'USER'
 			},
-			select: {
-				id: true,
-				email: true,
-				name: true,
-				phone: true,
-				avatar: true,
-				role: true,
-				createdAt: true
-			}
+			select: userSelect
 		})
 	}
 
 	async getProfile(userId: string) {
 		return this.prisma.user.findUnique({
 			where: { id: userId },
-			select: {
-				id: true,
-				email: true,
-				name: true,
-				phone: true,
-				avatar: true,
-				role: true,
-				createdAt: true
-			}
+			select: userSelect
 		})
 	}
 
@@ -118,14 +103,7 @@ export class UserService {
 		return this.prisma.user.update({
 			where: { id: userId },
 			data: updateData,
-			select: {
-				id: true,
-				email: true,
-				name: true,
-				phone: true,
-				avatar: true,
-				role: true
-			}
+			select: userSelect
 		})
 	}
 }
