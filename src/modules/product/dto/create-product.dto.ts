@@ -71,6 +71,10 @@ export class CreateProductDto {
 	@IsPositive({ message: 'Размер порции должен быть положительным' })
 	servingSize: number
 
+	@IsOptional()
+	@IsString()
+	unit?: string
+
 	@IsNotEmpty({ message: 'Категория обязательна' })
 	@IsUUID('4', { message: 'Неверный формат ID категории' })
 	categoryId: string

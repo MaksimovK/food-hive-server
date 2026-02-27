@@ -57,6 +57,10 @@ export class UpdateProductDto {
 	servingSize?: number
 
 	@IsOptional()
+	@IsString()
+	unit?: string
+
+	@IsOptional()
 	@IsUUID('4', { message: 'Неверный формат ID категории' })
 	categoryId?: string
 

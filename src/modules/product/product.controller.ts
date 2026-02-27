@@ -27,6 +27,11 @@ export class ProductController {
 		return this.productService.findAll(categoryId)
 	}
 
+	@Get('search')
+	async search(@Query('q') q?: string) {
+		return this.productService.search({ q })
+	}
+
 	@Get(':id')
 	async findOne(@Param('id') id: string) {
 		return this.productService.findOne(id)

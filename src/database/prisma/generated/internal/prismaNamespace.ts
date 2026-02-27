@@ -1457,6 +1457,7 @@ export const ProductScalarFieldEnum = {
   fatPer100g: 'fatPer100g',
   carbsPer100g: 'carbsPer100g',
   servingSize: 'servingSize',
+  unit: 'unit',
   isActive: 'isActive',
   categoryId: 'categoryId',
   createdAt: 'createdAt',

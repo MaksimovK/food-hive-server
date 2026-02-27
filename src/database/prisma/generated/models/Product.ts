@@ -55,6 +55,7 @@ export type ProductMinAggregateOutputType = {
   fatPer100g: number | null
   carbsPer100g: number | null
   servingSize: number | null
+  unit: string | null
   isActive: boolean | null
   categoryId: string | null
   createdAt: Date | null
@@ -72,6 +73,7 @@ export type ProductMaxAggregateOutputType = {
   fatPer100g: number | null
   carbsPer100g: number | null
   servingSize: number | null
+  unit: string | null
   isActive: boolean | null
   categoryId: string | null
   createdAt: Date | null
@@ -89,6 +91,7 @@ export type ProductCountAggregateOutputType = {
   fatPer100g: number
   carbsPer100g: number
   servingSize: number
+  unit: number
   isActive: number
   categoryId: number
   createdAt: number
@@ -126,6 +129,7 @@ export type ProductMinAggregateInputType = {
   fatPer100g?: true
   carbsPer100g?: true
   servingSize?: true
+  unit?: true
   isActive?: true
   categoryId?: true
   createdAt?: true
@@ -143,6 +147,7 @@ export type ProductMaxAggregateInputType = {
   fatPer100g?: true
   carbsPer100g?: true
   servingSize?: true
+  unit?: true
   isActive?: true
   categoryId?: true
   createdAt?: true
@@ -160,6 +165,7 @@ export type ProductCountAggregateInputType = {
   fatPer100g?: true
   carbsPer100g?: true
   servingSize?: true
+  unit?: true
   isActive?: true
   categoryId?: true
   createdAt?: true
@@ -264,6 +270,7 @@ export type ProductGroupByOutputType = {
   fatPer100g: number
   carbsPer100g: number
   servingSize: number
+  unit: string
   isActive: boolean
   categoryId: string
   createdAt: Date
@@ -304,6 +311,7 @@ export type ProductWhereInput = {
   fatPer100g?: Prisma.FloatFilter<"Product"> | number
   carbsPer100g?: Prisma.FloatFilter<"Product"> | number
   servingSize?: Prisma.IntFilter<"Product"> | number
+  unit?: Prisma.StringFilter<"Product"> | string
   isActive?: Prisma.BoolFilter<"Product"> | boolean
   categoryId?: Prisma.StringFilter<"Product"> | string
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
@@ -326,6 +334,7 @@ export type ProductOrderByWithRelationInput = {
   fatPer100g?: Prisma.SortOrder
   carbsPer100g?: Prisma.SortOrder
   servingSize?: Prisma.SortOrder
+  unit?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -351,6 +360,7 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   fatPer100g?: Prisma.FloatFilter<"Product"> | number
   carbsPer100g?: Prisma.FloatFilter<"Product"> | number
   servingSize?: Prisma.IntFilter<"Product"> | number
+  unit?: Prisma.StringFilter<"Product"> | string
   isActive?: Prisma.BoolFilter<"Product"> | boolean
   categoryId?: Prisma.StringFilter<"Product"> | string
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
@@ -373,6 +383,7 @@ export type ProductOrderByWithAggregationInput = {
   fatPer100g?: Prisma.SortOrder
   carbsPer100g?: Prisma.SortOrder
   servingSize?: Prisma.SortOrder
+  unit?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -398,6 +409,7 @@ export type ProductScalarWhereWithAggregatesInput = {
   fatPer100g?: Prisma.FloatWithAggregatesFilter<"Product"> | number
   carbsPer100g?: Prisma.FloatWithAggregatesFilter<"Product"> | number
   servingSize?: Prisma.IntWithAggregatesFilter<"Product"> | number
+  unit?: Prisma.StringWithAggregatesFilter<"Product"> | string
   isActive?: Prisma.BoolWithAggregatesFilter<"Product"> | boolean
   categoryId?: Prisma.StringWithAggregatesFilter<"Product"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Product"> | Date | string
@@ -415,6 +427,7 @@ export type ProductCreateInput = {
   fatPer100g: number
   carbsPer100g: number
   servingSize: number
+  unit?: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -436,6 +449,7 @@ export type ProductUncheckedCreateInput = {
   fatPer100g: number
   carbsPer100g: number
   servingSize: number
+  unit?: string
   isActive?: boolean
   categoryId: string
   createdAt?: Date | string
@@ -457,6 +471,7 @@ export type ProductUpdateInput = {
   fatPer100g?: Prisma.FloatFieldUpdateOperationsInput | number
   carbsPer100g?: Prisma.FloatFieldUpdateOperationsInput | number
   servingSize?: Prisma.IntFieldUpdateOperationsInput | number
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -478,6 +493,7 @@ export type ProductUncheckedUpdateInput = {
   fatPer100g?: Prisma.FloatFieldUpdateOperationsInput | number
   carbsPer100g?: Prisma.FloatFieldUpdateOperationsInput | number
   servingSize?: Prisma.IntFieldUpdateOperationsInput | number
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -499,6 +515,7 @@ export type ProductCreateManyInput = {
   fatPer100g: number
   carbsPer100g: number
   servingSize: number
+  unit?: string
   isActive?: boolean
   categoryId: string
   createdAt?: Date | string
@@ -516,6 +533,7 @@ export type ProductUpdateManyMutationInput = {
   fatPer100g?: Prisma.FloatFieldUpdateOperationsInput | number
   carbsPer100g?: Prisma.FloatFieldUpdateOperationsInput | number
   servingSize?: Prisma.IntFieldUpdateOperationsInput | number
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -532,6 +550,7 @@ export type ProductUncheckedUpdateManyInput = {
   fatPer100g?: Prisma.FloatFieldUpdateOperationsInput | number
   carbsPer100g?: Prisma.FloatFieldUpdateOperationsInput | number
   servingSize?: Prisma.IntFieldUpdateOperationsInput | number
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -569,6 +588,7 @@ export type ProductCountOrderByAggregateInput = {
   fatPer100g?: Prisma.SortOrder
   carbsPer100g?: Prisma.SortOrder
   servingSize?: Prisma.SortOrder
+  unit?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -595,6 +615,7 @@ export type ProductMaxOrderByAggregateInput = {
   fatPer100g?: Prisma.SortOrder
   carbsPer100g?: Prisma.SortOrder
   servingSize?: Prisma.SortOrder
+  unit?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -612,6 +633,7 @@ export type ProductMinOrderByAggregateInput = {
   fatPer100g?: Prisma.SortOrder
   carbsPer100g?: Prisma.SortOrder
   servingSize?: Prisma.SortOrder
+  unit?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -738,6 +760,7 @@ export type ProductCreateWithoutCartItemsInput = {
   fatPer100g: number
   carbsPer100g: number
   servingSize: number
+  unit?: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -758,6 +781,7 @@ export type ProductUncheckedCreateWithoutCartItemsInput = {
   fatPer100g: number
   carbsPer100g: number
   servingSize: number
+  unit?: string
   isActive?: boolean
   categoryId: string
   createdAt?: Date | string
@@ -794,6 +818,7 @@ export type ProductUpdateWithoutCartItemsInput = {
   fatPer100g?: Prisma.FloatFieldUpdateOperationsInput | number
   carbsPer100g?: Prisma.FloatFieldUpdateOperationsInput | number
   servingSize?: Prisma.IntFieldUpdateOperationsInput | number
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -814,6 +839,7 @@ export type ProductUncheckedUpdateWithoutCartItemsInput = {
   fatPer100g?: Prisma.FloatFieldUpdateOperationsInput | number
   carbsPer100g?: Prisma.FloatFieldUpdateOperationsInput | number
   servingSize?: Prisma.IntFieldUpdateOperationsInput | number
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -834,6 +860,7 @@ export type ProductCreateWithoutCategoryInput = {
   fatPer100g: number
   carbsPer100g: number
   servingSize: number
+  unit?: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -854,6 +881,7 @@ export type ProductUncheckedCreateWithoutCategoryInput = {
   fatPer100g: number
   carbsPer100g: number
   servingSize: number
+  unit?: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -903,6 +931,7 @@ export type ProductScalarWhereInput = {
   fatPer100g?: Prisma.FloatFilter<"Product"> | number
   carbsPer100g?: Prisma.FloatFilter<"Product"> | number
   servingSize?: Prisma.IntFilter<"Product"> | number
+  unit?: Prisma.StringFilter<"Product"> | string
   isActive?: Prisma.BoolFilter<"Product"> | boolean
   categoryId?: Prisma.StringFilter<"Product"> | string
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
@@ -920,6 +949,7 @@ export type ProductCreateWithoutFavoritesInput = {
   fatPer100g: number
   carbsPer100g: number
   servingSize: number
+  unit?: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -940,6 +970,7 @@ export type ProductUncheckedCreateWithoutFavoritesInput = {
   fatPer100g: number
   carbsPer100g: number
   servingSize: number
+  unit?: string
   isActive?: boolean
   categoryId: string
   createdAt?: Date | string
@@ -976,6 +1007,7 @@ export type ProductUpdateWithoutFavoritesInput = {
   fatPer100g?: Prisma.FloatFieldUpdateOperationsInput | number
   carbsPer100g?: Prisma.FloatFieldUpdateOperationsInput | number
   servingSize?: Prisma.IntFieldUpdateOperationsInput | number
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -996,6 +1028,7 @@ export type ProductUncheckedUpdateWithoutFavoritesInput = {
   fatPer100g?: Prisma.FloatFieldUpdateOperationsInput | number
   carbsPer100g?: Prisma.FloatFieldUpdateOperationsInput | number
   servingSize?: Prisma.IntFieldUpdateOperationsInput | number
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1016,6 +1049,7 @@ export type ProductCreateWithoutOrderItemsInput = {
   fatPer100g: number
   carbsPer100g: number
   servingSize: number
+  unit?: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1036,6 +1070,7 @@ export type ProductUncheckedCreateWithoutOrderItemsInput = {
   fatPer100g: number
   carbsPer100g: number
   servingSize: number
+  unit?: string
   isActive?: boolean
   categoryId: string
   createdAt?: Date | string
@@ -1072,6 +1107,7 @@ export type ProductUpdateWithoutOrderItemsInput = {
   fatPer100g?: Prisma.FloatFieldUpdateOperationsInput | number
   carbsPer100g?: Prisma.FloatFieldUpdateOperationsInput | number
   servingSize?: Prisma.IntFieldUpdateOperationsInput | number
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1092,6 +1128,7 @@ export type ProductUncheckedUpdateWithoutOrderItemsInput = {
   fatPer100g?: Prisma.FloatFieldUpdateOperationsInput | number
   carbsPer100g?: Prisma.FloatFieldUpdateOperationsInput | number
   servingSize?: Prisma.IntFieldUpdateOperationsInput | number
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1112,6 +1149,7 @@ export type ProductCreateWithoutProductIngredientsInput = {
   fatPer100g: number
   carbsPer100g: number
   servingSize: number
+  unit?: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1132,6 +1170,7 @@ export type ProductUncheckedCreateWithoutProductIngredientsInput = {
   fatPer100g: number
   carbsPer100g: number
   servingSize: number
+  unit?: string
   isActive?: boolean
   categoryId: string
   createdAt?: Date | string
@@ -1168,6 +1207,7 @@ export type ProductUpdateWithoutProductIngredientsInput = {
   fatPer100g?: Prisma.FloatFieldUpdateOperationsInput | number
   carbsPer100g?: Prisma.FloatFieldUpdateOperationsInput | number
   servingSize?: Prisma.IntFieldUpdateOperationsInput | number
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1188,6 +1228,7 @@ export type ProductUncheckedUpdateWithoutProductIngredientsInput = {
   fatPer100g?: Prisma.FloatFieldUpdateOperationsInput | number
   carbsPer100g?: Prisma.FloatFieldUpdateOperationsInput | number
   servingSize?: Prisma.IntFieldUpdateOperationsInput | number
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1208,6 +1249,7 @@ export type ProductCreateManyCategoryInput = {
   fatPer100g: number
   carbsPer100g: number
   servingSize: number
+  unit?: string
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1224,6 +1266,7 @@ export type ProductUpdateWithoutCategoryInput = {
   fatPer100g?: Prisma.FloatFieldUpdateOperationsInput | number
   carbsPer100g?: Prisma.FloatFieldUpdateOperationsInput | number
   servingSize?: Prisma.IntFieldUpdateOperationsInput | number
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1244,6 +1287,7 @@ export type ProductUncheckedUpdateWithoutCategoryInput = {
   fatPer100g?: Prisma.FloatFieldUpdateOperationsInput | number
   carbsPer100g?: Prisma.FloatFieldUpdateOperationsInput | number
   servingSize?: Prisma.IntFieldUpdateOperationsInput | number
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1264,6 +1308,7 @@ export type ProductUncheckedUpdateManyWithoutCategoryInput = {
   fatPer100g?: Prisma.FloatFieldUpdateOperationsInput | number
   carbsPer100g?: Prisma.FloatFieldUpdateOperationsInput | number
   servingSize?: Prisma.IntFieldUpdateOperationsInput | number
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1338,6 +1383,7 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   fatPer100g?: boolean
   carbsPer100g?: boolean
   servingSize?: boolean
+  unit?: boolean
   isActive?: boolean
   categoryId?: boolean
   createdAt?: boolean
@@ -1361,6 +1407,7 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   fatPer100g?: boolean
   carbsPer100g?: boolean
   servingSize?: boolean
+  unit?: boolean
   isActive?: boolean
   categoryId?: boolean
   createdAt?: boolean
@@ -1379,6 +1426,7 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   fatPer100g?: boolean
   carbsPer100g?: boolean
   servingSize?: boolean
+  unit?: boolean
   isActive?: boolean
   categoryId?: boolean
   createdAt?: boolean
@@ -1397,13 +1445,14 @@ export type ProductSelectScalar = {
   fatPer100g?: boolean
   carbsPer100g?: boolean
   servingSize?: boolean
+  unit?: boolean
   isActive?: boolean
   categoryId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "image" | "price" | "caloriesPer100g" | "proteinPer100g" | "fatPer100g" | "carbsPer100g" | "servingSize" | "isActive" | "categoryId" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "image" | "price" | "caloriesPer100g" | "proteinPer100g" | "fatPer100g" | "carbsPer100g" | "servingSize" | "unit" | "isActive" | "categoryId" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   productIngredients?: boolean | Prisma.Product$productIngredientsArgs<ExtArgs>
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
@@ -1439,6 +1488,7 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     fatPer100g: number
     carbsPer100g: number
     servingSize: number
+    unit: string
     isActive: boolean
     categoryId: string
     createdAt: Date
@@ -1881,6 +1931,7 @@ export interface ProductFieldRefs {
   readonly fatPer100g: Prisma.FieldRef<"Product", 'Float'>
   readonly carbsPer100g: Prisma.FieldRef<"Product", 'Float'>
   readonly servingSize: Prisma.FieldRef<"Product", 'Int'>
+  readonly unit: Prisma.FieldRef<"Product", 'String'>
   readonly isActive: Prisma.FieldRef<"Product", 'Boolean'>
   readonly categoryId: Prisma.FieldRef<"Product", 'String'>
   readonly createdAt: Prisma.FieldRef<"Product", 'DateTime'>

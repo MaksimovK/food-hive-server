@@ -11,6 +11,7 @@ model Product {
   fatPer100g      Float   @map("fat_per_100g")
   carbsPer100g    Float   @map("carbs_per_100g")
   servingSize     Int     @map("serving_size")
+  unit            String  @default("г")
   isActive        Boolean @default(true) @map("is_active")
 
   productIngredients ProductIngredient[]
@@ -26,6 +27,7 @@ model Product {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@index([categoryId])
+  @@index([name])
   @@map("products")
 }
 

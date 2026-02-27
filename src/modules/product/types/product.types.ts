@@ -6,6 +6,7 @@ export const productSelect = {
 	description: true,
 	image: true,
 	price: true,
+	unit: true,
 	caloriesPer100g: true,
 	proteinPer100g: true,
 	fatPer100g: true,
@@ -42,4 +43,24 @@ export const productSelect = {
 
 export type ProductResponse = Prisma.ProductGetPayload<{
 	select: typeof productSelect
+}>
+
+export const productSearchSelect = {
+	id: true,
+	name: true,
+	description: true,
+	image: true,
+	price: true,
+	unit: true,
+	caloriesPer100g: true,
+	proteinPer100g: true,
+	fatPer100g: true,
+	carbsPer100g: true,
+	servingSize: true,
+	isActive: true,
+	categoryId: true
+} satisfies Prisma.ProductSelect
+
+export type ProductSearchResponse = Prisma.ProductGetPayload<{
+	select: typeof productSearchSelect
 }>

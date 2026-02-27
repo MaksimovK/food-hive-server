@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common'
 import { CreateProductDto } from './dto/create-product.dto'
 import { UpdateProductDto } from './dto/update-product.dto'
-import { productSelect } from './types/product.types'
+import { productSearchSelect, productSelect } from './types/product.types'
 
 @Injectable()
 export class ProductService {
@@ -24,6 +24,7 @@ export class ProductService {
 			fatPer100g,
 			carbsPer100g,
 			servingSize,
+			unit,
 			categoryId,
 			isActive,
 			ingredients
@@ -58,6 +59,7 @@ export class ProductService {
 				fatPer100g,
 				carbsPer100g,
 				servingSize,
+				unit: unit ?? 'г',
 				categoryId,
 				isActive: isActive ?? true,
 				productIngredients: ingredients
@@ -81,6 +83,42 @@ export class ProductService {
 				categoryId: categoryId
 			},
 			select: productSelect
+		})
+	}
+
+	async search(query?: { q?: string }) {
+		const searchTerm = query?.q?.trim()
+
+		if (!searchTerm || searchTerm.length === 0) {
+			return this.prisma.product.findMany({
+				where: { isActive: true },
+				select: productSearchSelect,
+				orderBy: { name: 'asc' }
+			})
+		}
+
+		return this.prisma.product.findMany({
+			where: {
+				isActive: true,
+				OR: [
+					{
+						name: {
+							contains: searchTerm,
+							mode: 'insensitive'
+						}
+					},
+					{
+						category: {
+							name: {
+								contains: searchTerm,
+								mode: 'insensitive'
+							}
+						}
+					}
+				]
+			},
+			select: productSearchSelect,
+			orderBy: { name: 'asc' }
 		})
 	}
 
