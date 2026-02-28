@@ -86,39 +86,40 @@ export class ProductService {
 		})
 	}
 
-	async search(query?: { q?: string }) {
+	async search(query?: { q?: string; limit?: number; offset?: number }) {
 		const searchTerm = query?.q?.trim()
+		const limit = query?.limit ? Math.max(1, Math.min(100, query.limit)) : 20
+		const offset = query?.offset ? Math.max(0, query.offset) : 0
 
-		if (!searchTerm || searchTerm.length === 0) {
-			return this.prisma.product.findMany({
-				where: { isActive: true },
-				select: productSearchSelect,
-				orderBy: { name: 'asc' }
-			})
+		const whereCondition: Prisma.ProductWhereInput = {
+			isActive: true
 		}
 
-		return this.prisma.product.findMany({
-			where: {
-				isActive: true,
-				OR: [
-					{
+		if (searchTerm && searchTerm.length > 0) {
+			whereCondition.OR = [
+				{
+					name: {
+						contains: searchTerm,
+						mode: 'insensitive'
+					}
+				},
+				{
+					category: {
 						name: {
 							contains: searchTerm,
 							mode: 'insensitive'
 						}
-					},
-					{
-						category: {
-							name: {
-								contains: searchTerm,
-								mode: 'insensitive'
-							}
-						}
 					}
-				]
-			},
+				}
+			]
+		}
+
+		return this.prisma.product.findMany({
+			where: whereCondition,
 			select: productSearchSelect,
-			orderBy: { name: 'asc' }
+			orderBy: { name: 'asc' },
+			take: limit,
+			skip: offset
 		})
 	}
 

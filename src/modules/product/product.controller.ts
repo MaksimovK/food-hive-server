@@ -28,8 +28,16 @@ export class ProductController {
 	}
 
 	@Get('search')
-	async search(@Query('q') q?: string) {
-		return this.productService.search({ q })
+	async search(
+		@Query('q') q?: string,
+		@Query('limit') limit?: number,
+		@Query('offset') offset?: number
+	) {
+		return this.productService.search({
+			q,
+			limit: limit ? Number(limit) : undefined,
+			offset: offset ? Number(offset) : undefined
+		})
 	}
 
 	@Get(':id')
