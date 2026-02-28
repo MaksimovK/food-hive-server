@@ -24,13 +24,12 @@ export class RegisterDto {
 	})
 	password: string
 
-	@IsOptional()
 	@IsString()
 	@MinLength(2, { message: 'Имя должно быть не менее 2 символов' })
 	@Matches(NAME_REGEX, {
 		message: 'Имя может содержать только буквы, пробелы и дефисы'
 	})
-	name?: string
+	name: string
 
 	@IsOptional()
 	@IsString()
