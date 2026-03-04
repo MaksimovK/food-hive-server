@@ -25,6 +25,7 @@ export interface HomeResponse {
 			description: string | null
 			image: string
 			price: number
+			unit: string
 			caloriesPer100g: number
 			proteinPer100g: number
 			fatPer100g: number

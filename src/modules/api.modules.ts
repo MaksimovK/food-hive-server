@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common'
 import { AuthModule } from './auth/auth.module'
 import { BannerModule } from './banner/banner.module'
+import { CartModule } from './cart/cart.module'
 import { CategoryModule } from './category/category.module'
 import { FavoriteModule } from './favorite/favorite.module'
 import { HomeModule } from './home/home.module'
@@ -17,6 +18,7 @@ import { UserModule } from './user/user.module'
 		ProductModule,
 		BannerModule,
 		FavoriteModule,
+		CartModule,
 		HomeModule
 	]
 })

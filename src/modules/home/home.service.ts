@@ -58,6 +58,7 @@ export class HomeService {
 					description: p.description,
 					image: p.image,
 					price: p.price,
+					unit: p.unit,
 					caloriesPer100g: p.caloriesPer100g,
 					proteinPer100g: p.proteinPer100g,
 					fatPer100g: p.fatPer100g,

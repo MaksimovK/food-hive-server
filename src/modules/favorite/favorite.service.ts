@@ -4,13 +4,29 @@ import {
 	Injectable,
 	NotFoundException
 } from '@nestjs/common'
-import { productSearchSelect } from '../product/types/product.types'
 import { BulkOperationDto, ToggleFavoriteDto } from './dto/favorite.dto'
-import { FavoriteProductResponse } from './types/favorite.types'
+import {
+	FavoriteProductResponse,
+	favoriteProductSelect
+} from './types/favorite.types'
 
 @Injectable()
 export class FavoriteService {
 	constructor(private prisma: PrismaService) {}
+
+	async findAll(userId: string): Promise<FavoriteProductResponse[]> {
+		const favorites = await this.prisma.favorite.findMany({
+			where: { userId },
+			include: {
+				product: {
+					select: favoriteProductSelect
+				}
+			},
+			orderBy: { createdAt: 'desc' }
+		})
+
+		return favorites.map(f => f.product)
+	}
 
 	async toggle(userId: string, dto: ToggleFavoriteDto) {
 		const { productId } = dto
@@ -46,13 +62,6 @@ export class FavoriteService {
 			})
 			return { added: true, favorite }
 		}
-	}
-
-	async clear(userId: string) {
-		await this.prisma.favorite.deleteMany({
-			where: { userId }
-		})
-		return { message: 'Избранное очищено' }
 	}
 
 	async bulkAdd(userId: string, dto: BulkOperationDto) {
@@ -124,17 +133,10 @@ export class FavoriteService {
 		}
 	}
 
-	async findAll(userId: string): Promise<FavoriteProductResponse[]> {
-		const favorites = await this.prisma.favorite.findMany({
-			where: { userId },
-			include: {
-				product: {
-					select: productSearchSelect
-				}
-			},
-			orderBy: { createdAt: 'desc' }
+	async clear(userId: string) {
+		await this.prisma.favorite.deleteMany({
+			where: { userId }
 		})
-
-		return favorites.map(f => f.product)
+		return { message: 'Избранное очищено' }
 	}
 }
