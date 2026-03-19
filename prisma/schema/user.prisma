@@ -1,12 +1,13 @@
 model User {
   id String @id @default(uuid())
 
-  email    String   @unique
-  password String
-  name     String?
-  phone    String?  @unique
-  avatar   String? 
-  role     UserRole @default(USER)
+  email       String   @unique
+  password    String
+  name        String
+  phone       String   @unique
+  avatar      String?
+  dateOfBirth DateTime @map("date_of_birth")
+  role        UserRole @default(USER)
 
   addresses     Address[]
   favorites     Favorite[]

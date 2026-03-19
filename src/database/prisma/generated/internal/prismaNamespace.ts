@@ -1500,6 +1500,7 @@ export const UserScalarFieldEnum = {
   name: 'name',
   phone: 'phone',
   avatar: 'avatar',
+  dateOfBirth: 'dateOfBirth',
   role: 'role',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

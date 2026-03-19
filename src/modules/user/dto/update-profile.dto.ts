@@ -19,13 +19,13 @@ export class UpdateProfileDto {
 	@Matches(NAME_REGEX, {
 		message: 'Имя может содержать только буквы, пробелы и дефисы'
 	})
-	name?: string | null
+	name?: string
 
 	@IsOptional()
 	@Matches(PHONE_REGEX, {
 		message: 'Неверный формат телефона. Пример: +79991234567'
 	})
-	phone?: string | null
+	phone?: string
 
 	@IsOptional()
 	@IsUrl({}, { message: 'Неверный формат URL аватара' })

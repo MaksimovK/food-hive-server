@@ -8,10 +8,10 @@ import {
 } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
+import { UserResponse, userSelect } from '../user/types/user.types'
 import { UserService } from '../user/user.service'
 import { LoginDto } from './dto/login.dto'
 import { RegisterDto } from './dto/register.dto'
-import { AuthUserResponse } from './types/auth-user-response.interface'
 
 @Injectable()
 export class AuthService {
@@ -23,7 +23,7 @@ export class AuthService {
 	) {}
 
 	async register(dto: RegisterDto): Promise<{
-		user: AuthUserResponse
+		user: UserResponse
 		accessToken: string
 		refreshToken: string
 	}> {
@@ -45,21 +45,15 @@ export class AuthService {
 		dto: LoginDto,
 		deviceId: string
 	): Promise<{
-		user: AuthUserResponse
+		user: UserResponse
 		accessToken: string
 		refreshToken: string
 	}> {
 		const user = await this.prisma.user.findUnique({
 			where: { email: dto.email },
 			select: {
-				id: true,
-				email: true,
-				name: true,
-				phone: true,
-				avatar: true,
-				role: true,
-				password: true,
-				createdAt: true
+				...userSelect,
+				password: true
 			}
 		})
 

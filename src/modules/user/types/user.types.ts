@@ -6,6 +6,7 @@ export const userSelect = {
 	name: true,
 	phone: true,
 	avatar: true,
+	dateOfBirth: true,
 	role: true,
 	createdAt: true
 } satisfies Prisma.UserSelect

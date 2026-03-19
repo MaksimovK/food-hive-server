@@ -32,11 +32,15 @@ export class UserService {
 				throw new ConflictException('Телефон уже зарегистрирован')
 		}
 
+		const [day, month, year] = dto.dateOfBirth.split('-').map(Number)
+		const dateOfBirth = new Date(Date.UTC(year, month - 1, day))
+
 		return await this.prisma.user.create({
 			data: {
 				...dto,
 				password: hashedPassword,
-				role: 'USER'
+				role: 'USER',
+				dateOfBirth
 			},
 			select: userSelect
 		})
@@ -84,21 +88,21 @@ export class UserService {
 		if (name !== undefined) updateData.name = name
 
 		if (phone !== undefined) {
-			if (phone !== null) {
-				const existingPhone = await this.prisma.user.findUnique({
-					where: { phone: phone }
-				})
+			const existingPhone = await this.prisma.user.findUnique({
+				where: { phone: phone }
+			})
 
-				if (existingPhone && existingPhone.id !== userId)
-					throw new ConflictException(
-						'Телефон уже используется другим пользователем'
-					)
+			if (existingPhone && existingPhone.id !== userId)
+				throw new ConflictException(
+					'Телефон уже используется другим пользователем'
+				)
 
-				updateData.phone = phone
-			}
+			updateData.phone = phone
 		}
 
-		if (avatar !== undefined) updateData.avatar = avatar
+		if (avatar !== undefined) {
+			updateData.avatar = avatar ?? null
+		}
 
 		return this.prisma.user.update({
 			where: { id: userId },
