@@ -6,6 +6,7 @@ import { IS_DEV_ENV } from './common/utils/is-dev.util'
 import authConfig from './config/auth.config'
 import { PrismaModule } from './database/prisma/prisma.module'
 import { ApiModule } from './modules/api.modules'
+import { UploadModule } from './modules/upload/upload.module'
 
 @Module({
 	imports: [
@@ -19,8 +20,13 @@ import { ApiModule } from './modules/api.modules'
 			serveRoot: '/',
 			renderPath: '/public'
 		}),
+		ServeStaticModule.forRoot({
+			rootPath: join(process.cwd(), 'public', 'avatars'),
+			serveRoot: '/avatars'
+		}),
 		PrismaModule,
-		ApiModule
+		ApiModule,
+		UploadModule
 	]
 })
 export class AppModule {}

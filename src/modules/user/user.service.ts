@@ -9,12 +9,16 @@ import {
 	UnauthorizedException
 } from '@nestjs/common'
 import { RegisterDto } from '../auth/dto/register.dto'
+import { UploadService } from '../upload/upload.service'
 import { UpdateProfileDto } from './dto/update-profile.dto'
 import { userSelect } from './types/user.types'
 
 @Injectable()
 export class UserService {
-	constructor(private prisma: PrismaService) {}
+	constructor(
+		private prisma: PrismaService,
+		private uploadService: UploadService
+	) {}
 
 	async checkEmailExists(email: string): Promise<boolean> {
 		const user = await this.prisma.user.findUnique({ where: { email } })
@@ -107,6 +111,60 @@ export class UserService {
 		return this.prisma.user.update({
 			where: { id: userId },
 			data: updateData,
+			select: userSelect
+		})
+	}
+
+	async updateAvatar(userId: string, file: Express.Multer.File) {
+		// Валидация файла
+		this.uploadService.validateImageFile(file)
+
+		// Получаем текущую аватарку для удаления
+		const currentUser = await this.prisma.user.findUnique({
+			where: { id: userId },
+			select: { avatar: true }
+		})
+
+		if (!currentUser) {
+			throw new NotFoundException('Пользователь не найден')
+		}
+
+		// Удаляем старую аватарку
+		if (currentUser.avatar) {
+			this.uploadService.deleteAvatar(currentUser.avatar)
+		}
+
+		// Сохраняем новую аватарку
+		const avatarPath = this.uploadService.saveAvatar(file, userId)
+
+		// Обновляем запись в БД
+		return this.prisma.user.update({
+			where: { id: userId },
+			data: { avatar: avatarPath },
+			select: userSelect
+		})
+	}
+
+	async removeAvatar(userId: string) {
+		// Получаем текущую аватарку
+		const currentUser = await this.prisma.user.findUnique({
+			where: { id: userId },
+			select: { avatar: true }
+		})
+
+		if (!currentUser) {
+			throw new NotFoundException('Пользователь не найден')
+		}
+
+		// Удаляем файл с диска
+		if (currentUser.avatar) {
+			this.uploadService.deleteAvatar(currentUser.avatar)
+		}
+
+		// Обновляем запись в БД
+		return this.prisma.user.update({
+			where: { id: userId },
+			data: { avatar: null },
 			select: userSelect
 		})
 	}
