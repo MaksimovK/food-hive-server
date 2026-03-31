@@ -146,7 +146,7 @@ src/
 
 1. **Клонируйте репозиторий**
 ```bash
-git clone https://github.com/yourusername/food-hive.git
+git clone https://github.com/MaksimovK/food-hive-server.git
 cd food-hive/server
 ```
 
