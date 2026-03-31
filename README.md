@@ -30,6 +30,9 @@
 
 Проект создан для портфолио и демонстрирует навыки backend-разработки.
 
+**Связанные проекты:**
+- [Food Hive Mobile](https://github.com/MaksimovK/food-hive-mobile) — клиентская часть
+
 ---
 
 ## ✨ Возможности
@@ -407,6 +410,10 @@ curl -X POST http://localhost:4200/api/orders/{orderId}/repeat \
 **Автор**: Максимов Кирилл  
 **Email**: kmakismov@yandex.ru  
 **GitHub**: [github.com/MaksimovK](https://github.com/MaksimovK)  
+
+**Связанные проекты:**
+- [Food Hive Mobile](https://github.com/MaksimovK/food-hive-mobile) — клиентская часть
+
 
 ---
 
