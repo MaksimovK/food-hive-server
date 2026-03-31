@@ -21,13 +21,12 @@ export const OrderStatus = {
 export type OrderStatus = (typeof OrderStatus)[keyof typeof OrderStatus]
 
 
-export const PaymentStatus = {
-  PENDING: 'PENDING',
-  PAID: 'PAID',
-  REFUNDED: 'REFUNDED'
+export const PaymentMethod = {
+  CASH: 'CASH',
+  CARD: 'CARD'
 } as const
 
-export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
+export type PaymentMethod = (typeof PaymentMethod)[keyof typeof PaymentMethod]
 
 
 export const UserRole = {

@@ -3,7 +3,7 @@ model Order {
 
   userName      String        @map("user_name")
   status        OrderStatus   @default(PENDING)
-  paymentStatus PaymentStatus @default(PENDING) @map("payment_status")
+  paymentMethod PaymentMethod @map("payment_method")
   totalAmount   Float         @map("total_amount")
 
   deliveryStreet    String  @map("delivery_street")
@@ -61,12 +61,10 @@ enum OrderStatus {
   CANCELLED
 }
 
-/// Статусы оплаты:
-///   PENDING   — Ожидает оплаты
-///   PAID      — Оплачен
-///   REFUNDED  — Средства возвращены
-enum PaymentStatus {
-  PENDING
-  PAID
-  REFUNDED
+/// Способ оплаты:
+///   CASH  — Наличными
+///   CARD  — Картой при получение
+enum PaymentMethod {
+  CASH
+  CARD
 }

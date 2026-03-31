@@ -10,8 +10,6 @@ export const addressSelect = {
 	floor: true,
 	comment: true,
 	isDefault: true,
-	createdAt: true,
-	updatedAt: true
 } satisfies Prisma.AddressSelect
 
 export type AddressResponse = Prisma.AddressGetPayload<{
