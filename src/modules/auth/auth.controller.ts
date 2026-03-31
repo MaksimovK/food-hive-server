@@ -8,6 +8,13 @@ import {
 	UnauthorizedException,
 	UseGuards
 } from '@nestjs/common'
+import {
+	ApiBearerAuth,
+	ApiBody,
+	ApiOperation,
+	ApiResponse,
+	ApiTags
+} from '@nestjs/swagger'
 import type { Request } from 'express'
 import { CurrentUser } from '../../common/decorators/current-user.decorator'
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard'
@@ -16,16 +23,63 @@ import { LoginDto } from './dto/login.dto'
 import { RegisterDto } from './dto/register.dto'
 
 @Controller('auth')
+@ApiTags('auth')
 export class AuthController {
 	constructor(private authService: AuthService) {}
 
 	@Post('register')
+	@ApiOperation({ summary: 'Регистрация нового пользователя' })
+	@ApiBody({ type: RegisterDto })
+	@ApiResponse({
+		status: 201,
+		description: 'Пользователь успешно зарегистрирован',
+		schema: {
+			example: {
+				user: {
+					id: 'uuid',
+					email: 'user@example.com',
+					name: 'Иван Иванов',
+					phone: '+79991234567',
+					avatar: null,
+					dateOfBirth: '1990-05-15T00:00:00.000Z',
+					role: 'USER',
+					createdAt: '2024-01-01T00:00:00.000Z'
+				},
+				accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
+				refreshToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+			}
+		}
+	})
+	@ApiResponse({ status: 409, description: 'Пользователь с таким email уже существует' })
 	@HttpCode(HttpStatus.CREATED)
 	async register(@Body() dto: RegisterDto) {
 		return this.authService.register(dto)
 	}
 
 	@Post('login')
+	@ApiOperation({ summary: 'Вход в систему' })
+	@ApiBody({ type: LoginDto })
+	@ApiResponse({
+		status: 200,
+		description: 'Успешный вход',
+		schema: {
+			example: {
+				user: {
+					id: 'uuid',
+					email: 'user@example.com',
+					name: 'Иван Иванов',
+					phone: '+79991234567',
+					avatar: '/avatars/avatar_uuid_123.png',
+					dateOfBirth: '1990-05-15T00:00:00.000Z',
+					role: 'USER',
+					createdAt: '2024-01-01T00:00:00.000Z'
+				},
+				accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
+				refreshToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+			}
+		}
+	})
+	@ApiResponse({ status: 401, description: 'Неверный email или пароль' })
 	@HttpCode(HttpStatus.OK)
 	async login(@Body() dto: LoginDto, @Req() req: Request) {
 		const deviceId = this.getDeviceId(req)
@@ -42,6 +96,25 @@ export class AuthController {
 	}
 
 	@Post('refresh')
+	@ApiOperation({ summary: 'Обновление access-токена' })
+	@ApiBody({
+		schema: {
+			example: {
+				refreshToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+			}
+		}
+	})
+	@ApiResponse({
+		status: 200,
+		description: 'Токены успешно обновлены',
+		schema: {
+			example: {
+				accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
+				refreshToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+			}
+		}
+	})
+	@ApiResponse({ status: 401, description: 'Неверный refresh токен' })
 	@HttpCode(HttpStatus.OK)
 	async refresh(@Body() body: { refreshToken: string }, @Req() req: Request) {
 		const { refreshToken } = body
@@ -57,6 +130,17 @@ export class AuthController {
 
 	@Post('logout')
 	@UseGuards(JwtAuthGuard)
+	@ApiBearerAuth()
+	@ApiOperation({ summary: 'Выход из системы' })
+	@ApiBody({
+		schema: {
+			example: {
+				refreshToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+			}
+		}
+	})
+	@ApiResponse({ status: 200, description: 'Выход выполнен успешно' })
+	@ApiResponse({ status: 401, description: 'Неавторизован' })
 	@HttpCode(HttpStatus.OK)
 	async logout(
 		@Req() req: Request,
